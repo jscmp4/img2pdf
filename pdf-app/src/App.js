@@ -63,33 +63,45 @@ class App extends React.Component {
       pageWrapper.boxShadow = "5px 5px 5px rgb(200,200,200)";
     }
 
-    const landing = (<div className="landing-page">
-      <div style={{ padding: "40px" }}>
-        Convert JPEG or PNG images to PDF without uploading your sensitve data anywhere.
-      <br />
-      Files are processed entirely on your device and does not get uploaded to any server.
+    const landing = (
+      <div className="landing-page">
+        <div style={{ padding: "40px" }}>
+          Convert JPEG or PNG images to PDF without uploading your sensitive data anywhere.
+          <br />
+          Files are processed entirely on your device and do not get uploaded to any server.
+        </div>
+        <button onClick={() => this.fileInput.current.click()} className="big-btn">Select Images</button>
+        <div className="dropzone"
+          onDragStart={(e) => {
+          }}
+          onDrop={(e) => {
+            if (e.stopPropagation) {
+              e.stopPropagation(); // stops the browser from redirecting.
+            }
+            if (e.preventDefault) {
+              e.preventDefault(); // stops the browser from redirecting.
+            }
+            let files = e.dataTransfer.files;
+            this.readfiles(files);
+          }}
+          onDragOver={(e) => {
+            if (e.preventDefault) {
+              e.preventDefault(); // stops the browser from redirecting.
+            }
+          }}
+          onDragEnter={(e) => { e.preventDefault(); }}>or drop images here</div>
+    
+        {/* 在这里添加捐款按钮 */}
+        <footer style={{ textAlign: 'center', paddingTop: '20px' }}>
+          <p>This tool is completely free to use, but maintaining it is not easy.</p>
+          <p>If you find this tool useful, please consider supporting us by making a donation.</p>
+          <a href="https://www.shaoyuyuan.com/yuan" target="_blank" 
+             style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px 20px', textDecoration: 'none', borderRadius: '5px' }}>
+            Donate
+          </a>
+        </footer>
       </div>
-      <button onClick={() => this.fileInput.current.click()} className="big-btn">Select Images</button>
-      <div className="dropzone"
-        onDragStart={(e) => {
-        }}
-        onDrop={(e) => {
-          if (e.stopPropagation) {
-            e.stopPropagation(); // stops the browser from redirecting.
-          }
-          if (e.preventDefault) {
-            e.preventDefault(); // stops the browser from redirecting.
-          }
-          let files = e.dataTransfer.files;
-          this.readfiles(files);
-        }}
-        onDragOver={(e) => {
-          if (e.preventDefault) {
-            e.preventDefault(); // stops the browser from redirecting.
-          }
-        }}
-        onDragEnter={(e) => { e.preventDefault(); }}>or drop images here</div>
-    </div>);
+    );
 
     const listView = (<div style={{ display: 'flex', flexWrap: 'wrap', flex: "1", justifyContent: "center" }} >
       {this.state.images.map((img, index) => (
